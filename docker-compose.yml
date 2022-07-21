@@ -1,0 +1,41 @@
+version: "3.7"
+services:
+  db:
+    image: mysql:8.0.29
+    # container_name: mysql-db
+    environment:
+      MYSQL_DATABASE: personal_journal
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./api/db/mysql/volumes:/var/lib/mysql
+
+  api:
+    build: ./api
+    command: /backend -c "entrypoint.sh"
+    volumes:
+      - ./api:/backend
+    environment:
+      - FLASK_ENV=development
+      - FLASK_APP=app.py
+    # entrypoint: /backend/entrypoint.sh
+    ports:
+      - "5000:5000"
+    links:
+      - db
+      
+  client:
+    build: ./client
+    command: ["npm", "start"]
+    volumes:
+      - ./client:/frontend
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+volumes:
+  node-modules:
