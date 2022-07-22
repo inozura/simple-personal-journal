@@ -1,9 +1,10 @@
+import moment from "moment";
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 
 const Create = () => {
   const [title, setTitle] = useState("");
-  const [date, setDate] = useState(Date.now());
+  const [date, setDate] = useState(moment(Date.now()).format("YYYY-MM-DD"));
   const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -62,6 +63,7 @@ const Create = () => {
               className="form-control"
               id="dateinput"
               name="dateinput"
+              value={date}
               onChange={(e) => handleChange(e.target.id, e.target.value)}
             />
           </div>

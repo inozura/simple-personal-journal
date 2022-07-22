@@ -104,7 +104,7 @@ const Detail = () => {
             <p className="inline-block">
               Date created: {moment(data.updated_at).format("YYYY-MM-DD")}
             </p>
-            <button className="btn btn-danger">Delete</button>
+            {/* <button className="btn btn-danger">Delete</button> */}
           </div>
         </div>
       </div>
