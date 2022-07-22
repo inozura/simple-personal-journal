@@ -1,5 +1,5 @@
 # Personal Journal Flask React Docker
-    <p>intialize repo for assessment test Novandra</p>
+<p>intialize repo for assessment test Novandra</p>
 
 ## Build
 ```
