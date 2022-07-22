@@ -1,5 +1,7 @@
 import os
 from datetime import date
+from sqlalchemy_serializer import SerializerMixin
+from sys import stdout
 from flask import Flask, make_response, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
@@ -28,7 +30,7 @@ db.create_all()
 #! Journal Model
 
 
-class Journal(db.Model):
+class Journal(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), unique=True)
     description = db.Column(db.Text)
@@ -54,18 +56,20 @@ def convertToJson(_value):
 @app.route('/api/journal', methods=['GET', 'POST', 'PUT'])
 def index():
     if request.method == 'GET':
-        journals = Journal.query.all()
-        jsonJournal = []
-        for journal in journals:
-            jsonJournal.append(journal)
-        response = make_response(jsonify(jsonJournal))
+        journals = Journal.query.all().to_dict()
+        # jsonJournal = []
+        # for journal in journals:
+        #     print(journal)
+        #     jsonJournal.append(journal)
+        # print(jsonJournal)
+        response = make_response(jsonify(journals))
         response.headers['Access-Control-Allow-Origin'] = '*'
         response.headers['Content-Type'] = 'application/json'
         response.status_code = 200
         return response
 
     if request.method == 'POST':
-        data = json.dumps(request.json)
+        data = request.json
         # check if
         if request.data:
             # Save to DB
@@ -86,7 +90,7 @@ def index():
             return response
 
     if request.method == 'PUT':
-        data = json.dumps(request.json)
+        data = request.json
         if request.data:
             journal = Journal.query.get(data['id'])
             if(journal):
@@ -108,21 +112,34 @@ def index():
 
 @app.route('/api/journal/<id>', methods=['GET', 'DEL'])
 def index2(id):
+    if request.method == 'GET':
+        journal = Journal.query.get(id)
+        if(journal):
+            response = make_response(
+                jsonify(journal))
+            response.status_code = 200
+            return response
+        else:
+            response = make_response(
+                jsonify({"message": 'data not found'}))
+            response.status_code = 404
+            return response
+
     if request.method == 'DEL':
         journal = Journal.query.filter_by(id=id)
         if(journal):
-            # journal.delete()
-            # db.session.commit()
+            journal.delete()
+            db.session.commit()
 
             response = make_response(
-                jsonify({"message": 'success update'}))
+                jsonify({"message": 'success delete'}))
             response.status_code = 200
             return response
-
-
-@app.route('/api/test', methods=['GET', 'DEL'])
-def index5():
-    return 'test'
+        else:
+            response = make_response(
+                jsonify({"message": 'data not found'}))
+            response.status_code = 404
+            return response
 
 
 #! process
