@@ -18,9 +18,9 @@ const Routes = () => {
     <Router>
       <RoutesDom>
         <Route path="/not-found" element={<NotFound />} />
-        <Route path="/edit/:id" element={<Edit />} />
-        <Route path="/detail/:id" element={<Detail />} />
-        <Route path="/create" element={<Create />} />
+        <Route path="/journals/:id/edit" element={<Edit />} />
+        <Route path="/journals/:id" element={<Detail />} />
+        <Route path="/new" element={<Create />} />
         <Route path="/" element={<Home />} />
 
         <Route path="*" element={<Navigate to="/not-found" replace />} />

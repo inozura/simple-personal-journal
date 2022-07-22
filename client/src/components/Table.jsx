@@ -59,13 +59,13 @@ const Table = ({ data, handleFilterDelete }) => {
                 <div className="d-flex d-flex align-items-center">
                   <Link
                     className="btn btn-primary me-2"
-                    to={`/detail/${journal.id}`}
+                    to={`/journals/${journal.id}`}
                   >
                     View
                   </Link>
                   <Link
                     className="btn btn-primary me-2"
-                    to={`/edit/${journal.id}`}
+                    to={`/journals/${journal.id}/edit`}
                   >
                     Edit
                   </Link>

@@ -49,7 +49,7 @@ const Home = () => {
     <div className="container mt-5">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h4 className="inline-block">Personal Journal</h4>
-        <Link className="btn btn-primary" to="/create">
+        <Link className="btn btn-primary" to="/new">
           Create
         </Link>
       </div>

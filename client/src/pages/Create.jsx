@@ -1,12 +1,13 @@
-import moment from "moment";
 import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Create = () => {
   const [title, setTitle] = useState("");
-  const [date, setDate] = useState(moment(Date.now()).format("YYYY-MM-DD"));
+  const [date, setDate] = useState();
   const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleChange = (id, value) => {
     if (id === "titleinput") setTitle(value);
@@ -31,7 +32,7 @@ const Create = () => {
       });
 
       if (response.status === 200) {
-        return <Navigate to="/" replace />;
+        return navigate("/");
       }
       setIsLoading(false);
     } catch (error) {
@@ -63,7 +64,6 @@ const Create = () => {
               className="form-control"
               id="dateinput"
               name="dateinput"
-              value={date}
               onChange={(e) => handleChange(e.target.id, e.target.value)}
             />
           </div>
