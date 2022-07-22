@@ -26,7 +26,6 @@ CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://root:root@db:3306/personal_journal"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
-db.create_all()
 
 #! Journal Model
 
