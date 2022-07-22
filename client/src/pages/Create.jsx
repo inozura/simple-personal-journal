@@ -30,7 +30,7 @@ const Create = () => {
       });
 
       if (response.status === 200) {
-        <Navigate to="/" />;
+        return <Navigate to="/" replace />;
       }
       setIsLoading(false);
     } catch (error) {
@@ -44,9 +44,7 @@ const Create = () => {
       <h4 className="inline-block">Personal Journal</h4>
 
       <div className="mb-3">
-        <label for="titleinput" className="form-label">
-          Title
-        </label>
+        <label className="form-label">Title</label>
         <input
           type="text"
           className="form-control"
@@ -55,9 +53,7 @@ const Create = () => {
           onChange={(e) => handleChange(e.target.id, e.target.value)}
         />
 
-        <label for="dateinput" className="form-label">
-          Journal Date
-        </label>
+        <label className="form-label">Journal Date</label>
         <input
           type="date"
           className="form-control"
@@ -67,9 +63,7 @@ const Create = () => {
         />
       </div>
       <div className="mb-3">
-        <label for="descriptioninput" className="form-label">
-          Body
-        </label>
+        <label className="form-label">Body</label>
         <textarea
           className="form-control"
           id="descriptioninput"

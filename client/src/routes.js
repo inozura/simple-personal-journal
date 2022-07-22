@@ -11,6 +11,7 @@ import Home from "./pages/Home";
 import Create from "./pages/Create";
 import Edit from "./pages/Edit";
 import NotFound from "./pages/NotFound";
+import Detail from "./pages/Detail";
 
 const Routes = () => {
   return (
@@ -18,6 +19,7 @@ const Routes = () => {
       <RoutesDom>
         <Route path="/not-found" element={<NotFound />} />
         <Route path="/edit/:id" element={<Edit />} />
+        <Route path="/detail/:id" element={<Detail />} />
         <Route path="/create" element={<Create />} />
         <Route path="/" element={<Home />} />
 

@@ -1,5 +1,6 @@
+import moment from "moment";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Modal from "../components/Modal";
 
 const Detail = () => {
@@ -8,11 +9,20 @@ const Detail = () => {
   const [isNotfound, setIsNotfound] = useState(false);
   const [isShowDialogDelete, setIsShowDialogDelete] = useState(false);
 
+  const navigate = useNavigate();
+
+  // Get params from URL
+  let { id } = useParams();
+
+  if (!id) {
+    return navigate("/");
+  }
+
   const fetchData = async () => {
     try {
       setIsLoading(true);
 
-      const response = await fetch(`http://localhost:5000/api/journal`, {
+      const response = await fetch(`http://localhost:5000/api/journal/${id}`, {
         method: "GET",
       });
 
@@ -28,14 +38,11 @@ const Detail = () => {
     }
   };
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     if (isLoading) {
       fetchData();
     }
-
-    return () => {
-      setIsLoading(true);
-    };
   }, []);
 
   if (isNotfound)
@@ -47,6 +54,7 @@ const Detail = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          flexDirection: "column",
         }}
       >
         <h1 style={{ textAlign: "center" }}>404</h1>
@@ -80,11 +88,11 @@ const Detail = () => {
           </Link>
         </div>
 
-        <div style={{ width: "60wh" }}>
+        <div style={{ width: "60vw" }}>
           <div className="d-flex justify-content-between align-items-center mb-3">
             <p className="inline-block">Title: {data.title}</p>
             <p className="inline-block">
-              Journal Date: {Date.parse(data.updated_at)}
+              Journal Date: {moment(data.updated_at).format("YYYY-MM-DD")}
             </p>
           </div>
 
@@ -94,9 +102,9 @@ const Detail = () => {
 
           <div className="d-flex justify-content-between align-items-center mb-3">
             <p className="inline-block">
-              Date created: {Date.parse(data.updated_at)}
+              Date created: {moment(data.updated_at).format("YYYY-MM-DD")}
             </p>
-            <button className="btn btn-danger">Create</button>
+            <button className="btn btn-danger">Delete</button>
           </div>
         </div>
       </div>

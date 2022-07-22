@@ -1,22 +1,30 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
+import BSModal from "react-bootstrap/Modal";
 
 const Modal = ({ show, handleClose, handleYes, data, isLoading }) => {
+  console.log(data);
   return (
-    <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>Delete</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>Did you realy want to delete {data?.title}</Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
+    <BSModal show={show} onHide={() => handleClose()}>
+      <BSModal.Header closeButton>
+        <BSModal.Title>Delete</BSModal.Title>
+      </BSModal.Header>
+      <BSModal.Body>
+        Did you realy want to delete <b>{data?.title}</b>
+      </BSModal.Body>
+      <BSModal.Footer>
+        <Button variant="secondary" onClick={() => handleClose()}>
           Close
         </Button>
-        <Button variant="primary" onClick={handleYes} disabled={isLoading}>
+        <Button
+          variant="primary"
+          onClick={() => handleYes()}
+          disabled={isLoading}
+        >
           Save Changes
         </Button>
-      </Modal.Footer>
-    </Modal>
+      </BSModal.Footer>
+    </BSModal>
   );
 };
 

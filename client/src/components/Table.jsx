@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import BootstrapTable from "react-bootstrap/Table";
 import { Link } from "react-router-dom";
+import moment from "moment";
 import Modal from "./Modal";
 
 const Table = ({ data, handleFilterDelete }) => {
@@ -53,15 +54,23 @@ const Table = ({ data, handleFilterDelete }) => {
             <tr>
               <td>{journal.title}</td>
               <td>{journal.description}</td>
-              <td>{journal.updated_at}</td>
+              <td>{moment(journal.updated_at).format("YYYY-MM-DD")}</td>
               <td>
-                <div className="d-flex d-flex justify-content-between align-items-center">
+                <div className="d-flex d-flex align-items-center">
                   <Link
-                    className="btn btn-primary"
+                    className="btn btn-primary me-2"
+                    to={`/detail/${journal.id}`}
+                  >
+                    View
+                  </Link>
+                  <Link
+                    className="btn btn-primary me-2"
                     to={`/edit/${journal.id}`}
-                  />
+                  >
+                    Edit
+                  </Link>
                   <button
-                    className="btn btn-primary"
+                    className="btn btn-danger"
                     onClick={() => handleClickDelete(journal)}
                   >
                     Delete
@@ -73,13 +82,15 @@ const Table = ({ data, handleFilterDelete }) => {
         </tbody>
       </BootstrapTable>
 
-      <Modal
-        handleClose={handleClose}
-        data={dataActive}
-        show={showDialog}
-        isLoading={isLoading}
-        handleYes={handleDelete}
-      />
+      {showDialog && (
+        <Modal
+          handleClose={handleClose}
+          data={dataActive}
+          show={showDialog}
+          isLoading={isLoading}
+          handleYes={handleDelete}
+        />
+      )}
     </>
   );
 };

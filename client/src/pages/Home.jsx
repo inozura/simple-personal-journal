@@ -15,7 +15,9 @@ const Home = () => {
       });
 
       if (response.status === 200) {
-        setData(await response.json());
+        const jsonData = await response.json();
+        console.log("jsonData", jsonData);
+        setData(jsonData);
         setIsLoading(false);
       }
     } catch (error) {
@@ -24,17 +26,11 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if (isLoading) {
-      fetchData();
-    }
-
-    return () => {
-      setIsLoading(true);
-    };
+    fetchData();
   }, []);
 
   const handleFilterDelete = (id) => {
-    setData(data.filter((journal) => journal.id !== id));
+    setData(data?.filter((journal) => journal.id !== id));
   };
 
   return isLoading ? (
@@ -58,7 +54,7 @@ const Home = () => {
         </Link>
       </div>
 
-      {data.length > 0 ? (
+      {data?.length > 0 ? (
         <Table data={data} handleFilterDelete={handleFilterDelete} />
       ) : (
         <>

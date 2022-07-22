@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useParams, useNavigate } from "react-router-dom";
+import moment from "moment";
 
 const Edit = () => {
   const [title, setTitle] = useState("");
@@ -7,11 +8,13 @@ const Edit = () => {
   const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const navigate = useNavigate();
+
   // Get params from URL
   let { id } = useParams();
 
   if (!id) {
-    return <Navigate to="/" />;
+    return navigate("/");
   }
 
   const fetchData = async () => {
@@ -25,16 +28,17 @@ const Edit = () => {
       if (response.status === 200) {
         const data = await response.json();
         setTitle(data.title);
-        setDate(data.date);
+        setDate(moment(data.date).format("YYYY-MM-DD"));
         setDescription(data.description);
         setIsLoading(false);
       }
 
       if (response.status === 404) {
-        <Navigate to="/not-found" />;
+        return navigate("/");
       }
     } catch (error) {
       console.log("error", error);
+      setIsLoading(false);
     }
   };
 
@@ -54,56 +58,59 @@ const Edit = () => {
       setIsLoading(true);
 
       const response = await fetch(`http://localhost:5000/api/journal/${id}`, {
-        method: "POST",
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
         body: JSON.stringify({
           title,
           description,
-          date,
+          date: date,
         }),
       });
 
       if (response.status === 200) {
         setIsLoading(false);
-        <Navigate to="/" />;
+        return navigate("/");
       }
     } catch (error) {
       console.log("error", error);
+      setIsLoading(true);
     }
   };
 
   return (
-    <div className="container mt-5" style={{ width: "60wh" }}>
+    <div className="container mt-5" style={{ width: "60vw" }}>
       <h4 className="inline-block">Personal Journal</h4>
 
       <div className="mb-3">
-        <label for="titleinput" className="form-label">
-          Title
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          id="titleinput"
-          name="titleinput"
-          value={title}
-          onChange={(e) => handleChange(e.target.id, e.target.value)}
-        />
-
-        <label for="dateinput" className="form-label">
-          Journal Date
-        </label>
-        <input
-          type="date"
-          className="form-control"
-          id="dateinput"
-          name="dateinput"
-          value={date}
-          onChange={(e) => handleChange(e.target.id, e.target.value)}
-        />
+        <div className="d-flex flex-row">
+          <div className="me-2">
+            <label className="form-label">Title</label>
+            <input
+              type="text"
+              className="form-control"
+              id="titleinput"
+              name="titleinput"
+              value={title}
+              onChange={(e) => handleChange(e.target.id, e.target.value)}
+            />
+          </div>
+          <div className="ms-2">
+            <label className="form-label">Journal Date</label>
+            <input
+              type="date"
+              className="form-control"
+              id="dateinput"
+              name="dateinput"
+              value={date}
+              onChange={(e) => handleChange(e.target.id, e.target.value)}
+            />
+          </div>
+        </div>
       </div>
       <div className="mb-3">
-        <label for="descriptioninput" className="form-label">
-          Body
-        </label>
+        <label className="form-label">Body</label>
         <textarea
           className="form-control"
           id="descriptioninput"

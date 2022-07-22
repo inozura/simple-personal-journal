@@ -10,6 +10,7 @@ const NotFound = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        flexDirection: "column",
       }}
     >
       <h1 style={{ textAlign: "center" }}>404</h1>
