@@ -44,23 +44,28 @@ const Create = () => {
       <h4 className="inline-block">Personal Journal</h4>
 
       <div className="mb-3">
-        <label className="form-label">Title</label>
-        <input
-          type="text"
-          className="form-control"
-          id="titleinput"
-          name="titleinput"
-          onChange={(e) => handleChange(e.target.id, e.target.value)}
-        />
-
-        <label className="form-label">Journal Date</label>
-        <input
-          type="date"
-          className="form-control"
-          id="dateinput"
-          name="dateinput"
-          onChange={(e) => handleChange(e.target.id, e.target.value)}
-        />
+        <div className="d-flex flex-row">
+          <div className="me-2">
+            <label className="form-label">Title</label>
+            <input
+              type="text"
+              className="form-control"
+              id="titleinput"
+              name="titleinput"
+              onChange={(e) => handleChange(e.target.id, e.target.value)}
+            />
+          </div>
+          <div className="ms-2">
+            <label className="form-label">Journal Date</label>
+            <input
+              type="date"
+              className="form-control"
+              id="dateinput"
+              name="dateinput"
+              onChange={(e) => handleChange(e.target.id, e.target.value)}
+            />
+          </div>
+        </div>
       </div>
       <div className="mb-3">
         <label className="form-label">Body</label>
