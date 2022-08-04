@@ -1,13 +1,13 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import Modal from "../components/Modal";
+// import Modal from "../components/Modal";
 
 const Detail = () => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isNotfound, setIsNotfound] = useState(false);
-  const [isShowDialogDelete, setIsShowDialogDelete] = useState(false);
+  // const [isShowDialogDelete, setIsShowDialogDelete] = useState(false);
 
   const navigate = useNavigate();
 
